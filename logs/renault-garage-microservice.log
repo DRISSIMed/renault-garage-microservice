@@ -1,0 +1,145 @@
+2025-10-31T21:11:09.735+01:00  INFO 12512 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : Starting RenaultApplication using Java 17.0.12 with PID 12512 (C:\Users\driss\OneDrive\Bureau\renault-garage-microservice\target\classes started by Drissi in C:\Users\driss\OneDrive\Bureau\renault-garage-microservice)
+2025-10-31T21:11:09.753+01:00  INFO 12512 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-10-31T21:11:12.213+01:00  INFO 12512 --- [renault-garage-microservice] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-31T21:11:12.394+01:00  INFO 12512 --- [renault-garage-microservice] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 155 ms. Found 3 JPA repository interfaces.
+2025-10-31T21:11:14.374+01:00  INFO 12512 --- [renault-garage-microservice] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-31T21:11:14.866+01:00  INFO 12512 --- [renault-garage-microservice] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-10-31T21:11:15.430+01:00  INFO 12512 --- [renault-garage-microservice] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-31T21:11:16.480+01:00  INFO 12512 --- [renault-garage-microservice] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-31T21:11:16.567+01:00  INFO 12512 --- [renault-garage-microservice] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-31T21:11:17.740+01:00  INFO 12512 --- [renault-garage-microservice] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 0a2fc65c-569b-4084-8486-3570fdbc0c5a
+2025-10-31T21:11:17.745+01:00  INFO 12512 --- [renault-garage-microservice] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-31T21:11:19.201+01:00  WARN 12512 --- [renault-garage-microservice] [main] org.hibernate.orm.deprecation            : HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-31T21:11:19.261+01:00  INFO 12512 --- [renault-garage-microservice] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-31T21:11:21.498+01:00  INFO 12512 --- [renault-garage-microservice] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-31T21:11:33.952+01:00 DEBUG 12512 --- [renault-garage-microservice] [main] org.hibernate.SQL                        : create table accessoires (id bigint identity not null, description varchar(255), nom varchar(255) not null, prix numeric(38,2) not null, type varchar(255) not null, vehicule_id bigint, primary key (id))
+2025-10-31T21:11:34.765+01:00 DEBUG 12512 --- [renault-garage-microservice] [main] org.hibernate.SQL                        : create table garages (id bigint identity not null, address varchar(255) not null, email varchar(255) not null, name varchar(255) not null, telephone varchar(255) not null, primary key (id))
+2025-10-31T21:11:35.280+01:00 DEBUG 12512 --- [renault-garage-microservice] [main] org.hibernate.SQL                        : create table [opening-time] (id bigint identity not null, day_of_week varchar(255) check (day_of_week in ('MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY','SUNDAY')), end_time date, start_time date, garage_id bigint, primary key (id))
+2025-10-31T21:11:35.465+01:00 DEBUG 12512 --- [renault-garage-microservice] [main] org.hibernate.SQL                        : create table vehicules (id bigint identity not null, annee_fabrication int not null, brand varchar(255) not null, model varchar(255) not null, type_carburant varchar(255) not null, garage_id bigint, primary key (id))
+2025-10-31T21:11:35.540+01:00 DEBUG 12512 --- [renault-garage-microservice] [main] org.hibernate.SQL                        : alter table accessoires add constraint FKh5h58yyj9vhipii4c9fvixxf6 foreign key (vehicule_id) references vehicules
+2025-10-31T21:11:36.010+01:00 DEBUG 12512 --- [renault-garage-microservice] [main] org.hibernate.SQL                        : alter table [opening-time] add constraint FKdbk7r9wcoq0iidxuko0tjcb30 foreign key (garage_id) references garages
+2025-10-31T21:11:36.449+01:00 DEBUG 12512 --- [renault-garage-microservice] [main] org.hibernate.SQL                        : alter table vehicules add constraint FKemevgfl63vuk3wp9hcpasco9y foreign key (garage_id) references garages
+2025-10-31T21:11:36.530+01:00  INFO 12512 --- [renault-garage-microservice] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-31T21:11:38.074+01:00  INFO 12512 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : Started RenaultApplication in 29.907 seconds (process running for 31.346)
+2025-10-31T21:11:38.085+01:00  INFO 12512 --- [renault-garage-microservice] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-31T21:11:38.093+01:00  INFO 12512 --- [renault-garage-microservice] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-31T21:11:38.106+01:00  INFO 12512 --- [renault-garage-microservice] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-31T21:15:13.689+01:00  INFO 9440 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : Starting RenaultApplication using Java 17.0.12 with PID 9440 (C:\Users\driss\OneDrive\Bureau\renault-garage-microservice\target\classes started by Drissi in C:\Users\driss\OneDrive\Bureau\renault-garage-microservice)
+2025-10-31T21:15:13.695+01:00  INFO 9440 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-10-31T21:15:15.230+01:00  INFO 9440 --- [renault-garage-microservice] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-31T21:15:15.418+01:00  INFO 9440 --- [renault-garage-microservice] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 163 ms. Found 3 JPA repository interfaces.
+2025-10-31T21:15:17.505+01:00  INFO 9440 --- [renault-garage-microservice] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-31T21:15:17.686+01:00  INFO 9440 --- [renault-garage-microservice] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-10-31T21:15:17.806+01:00  INFO 9440 --- [renault-garage-microservice] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-31T21:15:18.710+01:00  INFO 9440 --- [renault-garage-microservice] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-31T21:15:18.792+01:00  INFO 9440 --- [renault-garage-microservice] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-31T21:15:20.664+01:00  INFO 9440 --- [renault-garage-microservice] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 9f983a33-cfce-4350-8401-1d1ac83617cf
+2025-10-31T21:15:20.669+01:00  INFO 9440 --- [renault-garage-microservice] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-31T21:15:20.958+01:00  WARN 9440 --- [renault-garage-microservice] [main] org.hibernate.orm.deprecation            : HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-31T21:15:21.045+01:00  INFO 9440 --- [renault-garage-microservice] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-31T21:15:23.798+01:00  INFO 9440 --- [renault-garage-microservice] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-31T21:15:48.001+01:00  INFO 9440 --- [renault-garage-microservice] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-31T21:15:51.504+01:00  INFO 9440 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : Started RenaultApplication in 39.327 seconds (process running for 41.171)
+2025-10-31T21:15:51.568+01:00  INFO 9440 --- [renault-garage-microservice] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-31T21:15:51.583+01:00  INFO 9440 --- [renault-garage-microservice] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-31T21:15:51.648+01:00  INFO 9440 --- [renault-garage-microservice] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-31T21:20:00.624+01:00  INFO 9640 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : Starting RenaultApplication using Java 17.0.12 with PID 9640 (C:\Users\driss\OneDrive\Bureau\renault-garage-microservice\target\classes started by Drissi in C:\Users\driss\OneDrive\Bureau\renault-garage-microservice)
+2025-10-31T21:20:00.629+01:00  INFO 9640 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-10-31T21:20:02.046+01:00  INFO 9640 --- [renault-garage-microservice] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-31T21:20:02.208+01:00  INFO 9640 --- [renault-garage-microservice] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 140 ms. Found 3 JPA repository interfaces.
+2025-10-31T21:20:03.157+01:00  INFO 9640 --- [renault-garage-microservice] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-31T21:20:03.325+01:00  INFO 9640 --- [renault-garage-microservice] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-10-31T21:20:03.508+01:00  INFO 9640 --- [renault-garage-microservice] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-31T21:20:04.542+01:00  INFO 9640 --- [renault-garage-microservice] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-31T21:20:04.604+01:00  INFO 9640 --- [renault-garage-microservice] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-31T21:20:05.630+01:00  INFO 9640 --- [renault-garage-microservice] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: dfbcc05e-c1d7-478f-8805-189e235ba177
+2025-10-31T21:20:05.635+01:00  INFO 9640 --- [renault-garage-microservice] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-31T21:20:07.199+01:00  WARN 9640 --- [renault-garage-microservice] [main] org.hibernate.orm.deprecation            : HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-31T21:20:07.246+01:00  INFO 9640 --- [renault-garage-microservice] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-31T21:20:09.197+01:00  INFO 9640 --- [renault-garage-microservice] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-31T21:20:45.266+01:00  INFO 9640 --- [renault-garage-microservice] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-31T21:20:47.166+01:00  INFO 9640 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : Started RenaultApplication in 48.001 seconds (process running for 49.08)
+2025-10-31T21:20:47.179+01:00  INFO 9640 --- [renault-garage-microservice] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-31T21:20:47.186+01:00  INFO 9640 --- [renault-garage-microservice] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-31T21:20:47.203+01:00  INFO 9640 --- [renault-garage-microservice] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-31T21:23:34.628+01:00  INFO 19004 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : Starting RenaultApplication using Java 17.0.12 with PID 19004 (C:\Users\driss\OneDrive\Bureau\renault-garage-microservice\target\classes started by Drissi in C:\Users\driss\OneDrive\Bureau\renault-garage-microservice)
+2025-10-31T21:23:34.640+01:00  INFO 19004 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-10-31T21:23:36.077+01:00  INFO 19004 --- [renault-garage-microservice] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-31T21:23:36.239+01:00  INFO 19004 --- [renault-garage-microservice] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 140 ms. Found 3 JPA repository interfaces.
+2025-10-31T21:23:37.239+01:00  INFO 19004 --- [renault-garage-microservice] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-31T21:23:37.484+01:00  INFO 19004 --- [renault-garage-microservice] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-10-31T21:23:37.678+01:00  INFO 19004 --- [renault-garage-microservice] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-31T21:23:38.632+01:00  INFO 19004 --- [renault-garage-microservice] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-31T21:23:38.723+01:00  INFO 19004 --- [renault-garage-microservice] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-31T21:23:39.777+01:00  INFO 19004 --- [renault-garage-microservice] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 2ebb3150-fdc5-4b0d-943d-66941c5d8380
+2025-10-31T21:23:39.782+01:00  INFO 19004 --- [renault-garage-microservice] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-31T21:23:42.131+01:00  WARN 19004 --- [renault-garage-microservice] [main] org.hibernate.orm.deprecation            : HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-31T21:23:42.189+01:00  INFO 19004 --- [renault-garage-microservice] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-31T21:23:44.625+01:00  INFO 19004 --- [renault-garage-microservice] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-31T21:24:02.461+01:00  INFO 19004 --- [renault-garage-microservice] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-31T21:24:05.858+01:00  INFO 19004 --- [renault-garage-microservice] [main] com.cap.renault.RenaultApplication       : Started RenaultApplication in 32.603 seconds (process running for 33.661)
+2025-10-31T21:24:05.884+01:00  INFO 19004 --- [renault-garage-microservice] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-31T21:24:05.896+01:00  INFO 19004 --- [renault-garage-microservice] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-31T21:24:05.923+01:00  INFO 19004 --- [renault-garage-microservice] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-31T21:31:35.141+01:00  INFO 13468 --- [main] com.cap.renault.RenaultApplication       : Starting RenaultApplication using Java 17.0.12 with PID 13468 (C:\Users\driss\OneDrive\Bureau\renault-garage-microservice\target\classes started by Drissi in C:\Users\driss\OneDrive\Bureau\renault-garage-microservice)
+2025-10-31T21:31:35.165+01:00  INFO 13468 --- [main] com.cap.renault.RenaultApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-10-31T21:31:37.829+01:00  INFO 13468 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-31T21:31:38.040+01:00  INFO 13468 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 178 ms. Found 3 JPA repository interfaces.
+2025-10-31T21:31:39.515+01:00  INFO 13468 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-31T21:31:39.548+01:00  INFO 13468 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-31T21:31:39.549+01:00  INFO 13468 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-10-31T21:31:39.707+01:00  INFO 13468 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-31T21:31:39.718+01:00  INFO 13468 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4266 ms
+2025-10-31T21:31:40.818+01:00  INFO 13468 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-31T21:31:41.002+01:00  INFO 13468 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-10-31T21:31:41.095+01:00  INFO 13468 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-31T21:31:41.869+01:00  INFO 13468 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-31T21:31:41.942+01:00  INFO 13468 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-31T21:31:42.853+01:00  INFO 13468 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 0866d509-7405-4d95-8317-5da799d20fee
+2025-10-31T21:31:42.857+01:00  INFO 13468 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-31T21:31:44.434+01:00  WARN 13468 --- [main] org.hibernate.orm.deprecation            : HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-31T21:31:44.501+01:00  INFO 13468 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-31T21:31:46.851+01:00  INFO 13468 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-31T21:32:18.753+01:00  INFO 13468 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-31T21:32:22.276+01:00  WARN 13468 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-31T21:32:23.087+01:00 DEBUG 13468 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 16 mappings in 'requestMappingHandlerMapping'
+2025-10-31T21:32:23.376+01:00 DEBUG 13468 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-10-31T21:32:23.551+01:00 DEBUG 13468 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-10-31T21:32:23.743+01:00 DEBUG 13468 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-10-31T21:32:24.316+01:00  INFO 13468 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-31T21:32:24.364+01:00  INFO 13468 --- [main] com.cap.renault.RenaultApplication       : Started RenaultApplication in 51.204 seconds (process running for 52.353)
