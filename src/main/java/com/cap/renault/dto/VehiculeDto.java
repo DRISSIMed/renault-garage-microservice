@@ -19,5 +19,4 @@ public class VehiculeDto {
     private String brand;
     private Integer anneeFabrication;
     private String typeCarburant;
-    private Map<DayOfWeek, List<OpeningTime>> horairesOuverture = new HashMap<>();
 }

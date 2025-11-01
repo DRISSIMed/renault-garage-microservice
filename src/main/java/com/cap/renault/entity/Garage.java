@@ -1,6 +1,8 @@
 package com.cap.renault.entity;
 
 import com.cap.renault.util.OpeningTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,6 +38,7 @@ public class Garage {
     private String email;
 
     @OneToMany(mappedBy = "garage", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("garage")
     private List<OpeningTimeEntry> horairesOuvertureList = new ArrayList<>();
 
     @Transient
@@ -53,21 +56,6 @@ public class Garage {
                         OpeningTimeEntry::getDayOfWeek,
                         Collectors.mapping(OpeningTimeEntry::getOpeningTime, Collectors.toList())
                 ));
-    }
-    // Before persisting build OpeningTimeEntry
-    @PrePersist
-    @PreUpdate
-    private void loadList() {
-        horairesOuvertureList.clear();
-        horairesOuverture.forEach((day, times) ->
-                times.forEach(time -> {
-                    OpeningTimeEntry entry = new OpeningTimeEntry();
-                    entry.setDayOfWeek(day);
-                    entry.setOpeningTime(time);
-                    entry.setGarage(this);
-                    horairesOuvertureList.add(entry);
-                })
-        );
     }
 
 

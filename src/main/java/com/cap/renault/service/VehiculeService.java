@@ -5,9 +5,11 @@ import com.cap.renault.entity.Garage;
 import com.cap.renault.entity.Vehicule;
 import com.cap.renault.exception.CostumException;
 import com.cap.renault.exception.ResourceNotFoundException;
+import com.cap.renault.kafka.VehiculeEventProducer;
 import com.cap.renault.repository.GarageRepository;
 import com.cap.renault.repository.VehiculeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,16 @@ public class VehiculeService {
     @Autowired
     private GarageRepository garageRepository;
 
+    @Autowired
+    private VehiculeEventProducer vehiculeEventProducer;
+    @Value("${app.garage.vehicule-quota}")
+    private long quota;
+
     @Transactional
     public Vehicule createVehicle(Long garageId, VehiculeDto dto) throws CostumException, ResourceNotFoundException {
         Garage garage = garageRepository.findById(garageId).orElseThrow(() -> new ResourceNotFoundException("Garage not found"));
         long vehiculeExistInGarage = vehiculeRepository.countByGarageId(garageId);
-        if (vehiculeExistInGarage >= 50) throw new CostumException("Garage vehicle quota reached");
+        if (vehiculeExistInGarage >= quota) throw new CostumException("Garage vehicle quota reached");
 
         Vehicule v = new Vehicule();
         v.setBrand(dto.getBrand());
@@ -36,7 +43,7 @@ public class VehiculeService {
         v.setGarage(garage);
 
         Vehicule saved = vehiculeRepository.save(v);
-        //  publisher.publishVehicleCreated(saved);
+        vehiculeEventProducer.publishCreatedVehicule(saved);
         return saved;
     }
 

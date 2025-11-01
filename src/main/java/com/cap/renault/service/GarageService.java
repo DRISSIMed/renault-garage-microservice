@@ -2,19 +2,28 @@ package com.cap.renault.service;
 
 import com.cap.renault.dto.GarageDto;
 import com.cap.renault.entity.Garage;
+import com.cap.renault.entity.OpeningTimeEntry;
 import com.cap.renault.exception.ResourceNotFoundException;
 import com.cap.renault.repository.GarageRepository;
+import com.cap.renault.repository.OpeningTimeEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class GarageService {
     @Autowired
     private  GarageRepository garageRepository;
+    @Autowired
+    private OpeningTimeEntryService openingTimeEntryService;
+
+
 
     @Transactional
     public Garage createGarage(GarageDto dto) {
@@ -23,8 +32,11 @@ public class GarageService {
         g.setAddress(dto.getAddress());
         g.setTelephone(dto.getTelephone());
         g.setEmail(dto.getEmail());
-      //  g.setHorairesOuverture(dto.getHorairesOuverture());
-        return garageRepository.save(g);
+        g.setHorairesOuverture(dto.getHorairesOuverture());
+        Garage garageSaved =garageRepository.save(g);
+        garageRepository.flush();
+        openingTimeEntryService.createOpneningTime(dto.getHorairesOuverture(),garageSaved);
+        return garageSaved;
     }
 
     @Transactional
@@ -34,7 +46,8 @@ public class GarageService {
         g.setAddress(dto.getAddress());
         g.setTelephone(dto.getTelephone());
         g.setEmail(dto.getEmail());
-       g.setHorairesOuverture(dto.getHorairesOuverture());
+        g.setHorairesOuverture(dto.getHorairesOuverture());
+        openingTimeEntryService.updateOpeningTime(dto.getHorairesOuverture(),g);
         return garageRepository.save(g);
     }
 

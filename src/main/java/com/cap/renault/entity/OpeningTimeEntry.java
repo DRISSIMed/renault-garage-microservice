@@ -24,7 +24,7 @@ public class OpeningTimeEntry {
     @Embedded
     private OpeningTime openingTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "garage_id")
     private Garage garage;
 }
