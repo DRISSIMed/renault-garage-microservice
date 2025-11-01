@@ -46,6 +46,7 @@ public class Garage {
 
 
     @OneToMany(mappedBy = "garage", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("garage")
     private List<Vehicule> vehicles = new ArrayList<>();
 
     //After loading entity build HashMap for data recieved from db
