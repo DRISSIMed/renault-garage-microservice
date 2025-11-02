@@ -35,10 +35,6 @@ public class Vehicule {
     @Column(nullable = false)
     private String typeCarburant;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "garage_id")
-//    private Garage garage;
-
     @ManyToMany
     @JoinTable(name = "garage_vehicules",
             joinColumns = @JoinColumn(name = "vehiculeId"),
@@ -56,6 +52,4 @@ public class Vehicule {
     @EqualsAndHashCode.Exclude
     private Set<Accessoire> accessoiresVehicules = new HashSet<>();
 
-//    @OneToMany(mappedBy = "vehicule", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Accessoire> accessories = new ArrayList<>();
 }

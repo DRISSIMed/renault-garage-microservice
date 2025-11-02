@@ -33,9 +33,6 @@ public class Accessoire {
     @Column(nullable = false)
     private String type;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "vehicule_id")
-//    private Vehicule vehicule;
     @ManyToMany(mappedBy = "accessoiresVehicules")
     @EqualsAndHashCode.Exclude
     private Set<Vehicule> vehicules = new HashSet<>();

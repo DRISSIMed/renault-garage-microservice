@@ -44,10 +44,6 @@ public class Garage {
     private Map<DayOfWeek, List<OpeningTime>> horairesOuverture = new HashMap<>();
 
 
-//    @OneToMany(mappedBy = "garage", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIgnoreProperties("garage")
-//    private List<Vehicule> vehicles = new ArrayList<>();
-
     @ManyToMany(mappedBy = "garageVehicules")
     @EqualsAndHashCode.Exclude
     private Set<Vehicule> vehicules = new HashSet<>();
