@@ -48,25 +48,14 @@ class AccessoireControllerTest {
 
     @Test
     void testAddAccessoire_Success() throws Exception {
-        Mockito.when(accessoireService.ajoutAccessoire(eq(1L), any(AccessoireDto.class)))
+        Mockito.when(accessoireService.ajoutAccessoire( any(AccessoireDto.class)))
                 .thenReturn(accessoire);
 
-        mockMvc.perform(post("/api/accessoires/create/1")
+        mockMvc.perform(post("/api/accessoires/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.nom").value("GPS"));
-    }
-
-    @Test
-    void testAddAccessoire_NotFound() throws Exception {
-        Mockito.when(accessoireService.ajoutAccessoire(eq(99L), any(AccessoireDto.class)))
-                .thenThrow(new ResourceNotFoundException("Vehicule not found"));
-
-        mockMvc.perform(post("/api/accessoires/create/99")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isNotFound());
     }
 
     @Test

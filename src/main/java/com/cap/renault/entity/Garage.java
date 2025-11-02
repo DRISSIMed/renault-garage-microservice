@@ -6,13 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -23,6 +21,7 @@ import java.util.stream.Collectors;
 public class Garage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "garageId")
     private Long id;
 
     @Column(nullable = false)
@@ -45,9 +44,13 @@ public class Garage {
     private Map<DayOfWeek, List<OpeningTime>> horairesOuverture = new HashMap<>();
 
 
-    @OneToMany(mappedBy = "garage", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("garage")
-    private List<Vehicule> vehicles = new ArrayList<>();
+//    @OneToMany(mappedBy = "garage", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnoreProperties("garage")
+//    private List<Vehicule> vehicles = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "garageVehicules")
+    @EqualsAndHashCode.Exclude
+    private Set<Vehicule> vehicules = new HashSet<>();
 
     //After loading entity build HashMap for data recieved from db
     @PostLoad

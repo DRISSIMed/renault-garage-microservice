@@ -11,6 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,8 +30,10 @@ class VehiculeEventConsumerTest {
 
     @Test
     void testConsumeVehicule() {
+        Set<Long> garageIds =new HashSet<>();
+        Set<Long> accessoireIds =new HashSet<>();
         VehiculeCreatedEvent evt = new VehiculeCreatedEvent(
-                1L, 10L, "Clio 5", "Renault", 2022, "Essence", new Date()
+                1L, garageIds,accessoireIds, "Clio 5", "Renault", 2022, "Essence", new Date()
         );
 
         ConsumerRecord<String, VehiculeCreatedEvent> record =
@@ -38,7 +43,6 @@ class VehiculeEventConsumerTest {
 
         VehiculeCreatedEvent consumed = record.value();
         assertEquals(1L, consumed.vehicleId());
-        assertEquals(10L, consumed.garageId());
         assertEquals("Clio 5", consumed.model());
 
     }

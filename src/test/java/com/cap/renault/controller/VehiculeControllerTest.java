@@ -4,6 +4,7 @@ import com.cap.renault.dto.VehiculeDto;
 import com.cap.renault.entity.Vehicule;
 import com.cap.renault.exception.CostumException;
 import com.cap.renault.kafka.VehiculeEventProducer;
+import com.cap.renault.repository.AccessoireRepository;
 import com.cap.renault.repository.GarageRepository;
 import com.cap.renault.repository.VehiculeRepository;
 import com.cap.renault.service.VehiculeService;
@@ -32,7 +33,9 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -55,6 +58,9 @@ class VehiculeControllerTest {
     private GarageRepository garageRepository;
     @Mock
     private VehiculeRepository vehiculeRepository;
+
+    @Mock
+    private AccessoireRepository accessoireRepository;
     @Mock
     private VehiculeEventProducer vehiculeEventProducer;
 
@@ -81,14 +87,16 @@ class VehiculeControllerTest {
         dto = new VehiculeDto();
         dto.setModel("Clio 5");
         dto.setAnneeFabrication(2024);
+        dto.setAccessoiresIds(new HashSet<>());
+        dto.setGaragesIds(new HashSet<>());
     }
 
     @Test
     void testCreateVehicule_Success() throws Exception {
         when(garageRepository.findById(1L)).thenReturn(Optional.of(garage));
-        when(vehiculeRepository.countByGarageId(1L)).thenReturn(5L);
+        when(vehiculeRepository.countByGarageVehicules_Id(1L)).thenReturn(5L);
         when(vehiculeRepository.save(any(Vehicule.class))).thenReturn(vehicule);
-        Vehicule result = vehiculeService.createVehicle(1L, dto);
+        Vehicule result = vehiculeService.createVehicle( dto);
         assertNotNull(result);
         assertEquals("Clio 5", result.getModel());
     }
@@ -96,15 +104,37 @@ class VehiculeControllerTest {
 
     @Test
     void testCreateVehicule_Failure_Quota() throws Exception {
+        Set<Long> garageIds = new HashSet<>();
+        garageIds.add(1L);
+        garageIds.add(2L);
+        dto.setGaragesIds(garageIds);
         when(garageRepository.findById(1L)).thenReturn(Optional.of(garage));
-        when(vehiculeRepository.countByGarageId(1L)).thenReturn(51L);
+        when(vehiculeRepository.countByGarageVehicules_Id(1L)).thenReturn(51L);
         when(vehiculeRepository.save(any(Vehicule.class))).thenReturn(vehicule);
         CostumException thrown = assertThrows(
                 CostumException.class,
-                () -> vehiculeService.createVehicle(garage.getId(), dto),
+                () -> vehiculeService.createVehicle( dto),
                 "Garage vehicle quota reached"
         );
         assertEquals("Garage vehicle quota reached",thrown.getMessage());
+    }
+
+    @Test
+    void testCreateVehicule_NotFoundAccessoire() throws Exception {
+        Set<Long> accessoiresIds = new HashSet<>();
+        accessoiresIds.add(1L);
+        accessoiresIds.add(2L);
+        dto.setAccessoiresIds(accessoiresIds);
+        when(garageRepository.findById(1L)).thenReturn(Optional.of(garage));
+        when(accessoireRepository.findById(10L)).thenReturn(Optional.empty());
+        when(vehiculeRepository.countByGarageVehicules_Id(1L)).thenReturn(51L);
+        when(vehiculeRepository.save(any(Vehicule.class))).thenReturn(vehicule);
+        ResourceNotFoundException thrown = assertThrows(
+                ResourceNotFoundException.class,
+                () -> vehiculeService.createVehicle( dto),
+                "Accessoire not found"
+        );
+        assertEquals("Accessoire not found",thrown.getMessage());
     }
 
 

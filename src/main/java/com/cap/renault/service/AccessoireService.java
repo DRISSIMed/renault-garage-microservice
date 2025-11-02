@@ -20,14 +20,12 @@ public class AccessoireService {
     @Autowired
     private VehiculeRepository vehiculeRepository;
     @Transactional
-    public Accessoire ajoutAccessoire(Long vehiculeId, AccessoireDto dto) throws ResourceNotFoundException {
-        Vehicule v = vehiculeRepository.findById(vehiculeId).orElseThrow(() -> new ResourceNotFoundException("Vehicle not found"));
+    public Accessoire ajoutAccessoire( AccessoireDto dto)  {
         Accessoire a = new Accessoire();
         a.setNom(dto.getNom());
         a.setDescription(dto.getDescription());
         a.setPrix(dto.getPrix());
         a.setType(dto.getType());
-        a.setVehicule(v);
         return accessoireRepository.save(a);
     }
 

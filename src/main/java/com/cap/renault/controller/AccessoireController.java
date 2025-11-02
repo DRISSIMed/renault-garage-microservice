@@ -21,9 +21,9 @@ public class AccessoireController {
     @Autowired
     private AccessoireService accessoireService;
 
-    @PostMapping("/create/{vehicleId}")
-    public ResponseEntity<Accessoire> addAccessoire(@PathVariable Long vehicleId, @Validated @RequestBody AccessoireDto dto) throws ResourceNotFoundException {
-        Accessoire created = accessoireService.ajoutAccessoire(vehicleId, dto);
+    @PostMapping("/create")
+    public ResponseEntity<Accessoire> addAccessoire( @Validated @RequestBody AccessoireDto dto) throws ResourceNotFoundException {
+        Accessoire created = accessoireService.ajoutAccessoire(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 

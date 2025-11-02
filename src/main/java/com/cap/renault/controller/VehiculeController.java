@@ -21,14 +21,14 @@ import java.util.List;
 public class VehiculeController {
     @Autowired
     private VehiculeService vehiculeService;
-    @PostMapping("/create/{garageId}")
-    public ResponseEntity<Vehicule> create(@PathVariable Long garageId, @Validated @RequestBody VehiculeDto dto) throws CostumException, ResourceNotFoundException {
-        Vehicule v = vehiculeService.createVehicle(garageId, dto);
+    @PostMapping("/create")
+    public ResponseEntity<Vehicule> create(@Validated @RequestBody VehiculeDto dto) throws CostumException, ResourceNotFoundException {
+        Vehicule v = vehiculeService.createVehicle(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(v);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Vehicule> update(@PathVariable Long id, @Validated @RequestBody VehiculeDto dto) throws ResourceNotFoundException {
+    public ResponseEntity<Vehicule> update(@PathVariable Long id, @Validated @RequestBody VehiculeDto dto) throws ResourceNotFoundException, CostumException {
         return ResponseEntity.ok(vehiculeService.updateVehicule(id, dto));
     }
 

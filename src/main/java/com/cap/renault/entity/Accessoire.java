@@ -1,11 +1,15 @@
 package com.cap.renault.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -15,6 +19,7 @@ import java.math.BigDecimal;
 public class Accessoire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "accessoireId")
     private Long id;
 
     @Column(nullable = false)
@@ -28,7 +33,10 @@ public class Accessoire {
     @Column(nullable = false)
     private String type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vehicule_id")
-    private Vehicule vehicule;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "vehicule_id")
+//    private Vehicule vehicule;
+    @ManyToMany(mappedBy = "accessoiresVehicules")
+    @EqualsAndHashCode.Exclude
+    private Set<Vehicule> vehicules = new HashSet<>();
 }
